@@ -54,6 +54,13 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 	protected String getValorFormatado() {
 
 		// TODO: Explicar o que este método está fazendo
+		/*
+		 * O metódo transforma um valor em moeda, para um valor String. O valor do boleto é adicionado 
+		 * e através do metódo " valor.setScale(2, RoundingMode.HALF_UP)" ele é arrendondado e transformado em
+		 * um númeral de duas casas decimais depois da vígula. Após isso o número é transformado em string e onde for ponto 
+		 * ele substitui por vazio concatenando o número
+		 * 
+		 */
 		return String.format(
 				"%010d",
 				Long.valueOf(valor.setScale(2, RoundingMode.HALF_UP).toString()
@@ -132,11 +139,11 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 
 	/**
 	 * Calcula o digito verificado do código de barras
+	 * @param string 
 	 * 
-	 * @param codigoBarras
 	 * @return
 	 */
-	protected int digitoVerificadorCodigoBarras(String codigoBarras) {
+	protected int digitoVerificadorCodigoBarras(String string) {
 		// TODO: COMPLETAR
 		return 0;
 	}
@@ -177,6 +184,11 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 	protected static long diferencaEmDias(Date dataInicial, Date dataFinal) {
 
 		// TODO: Estude a Math e escreva aqui o que este método está fazendo
+		/*
+		 * Calcula a diferença entre duas datas, obtendo um resultado em segundos
+		 * Fazendo a divisão por ms obten-se um inteiro que através do Math.round
+		 * é arredondado para o número inteiro mais proximo 
+		 */
 
 		return Math
 				.round((dataFinal.getTime() - dataInicial.getTime()) / 86400000D);

@@ -77,8 +77,6 @@ public class BloquetoBBConvenio4 extends BloquetoBBImpl implements BloquetoBB {
 			String contaCorrenteRelacionamentoSemDV, String tipoCarteira)
 			throws ManagerException {
 
-		//TODO: INICIALIZAR DADOS
-
 		validaDados();
 
 	}
@@ -95,17 +93,20 @@ public class BloquetoBBConvenio4 extends BloquetoBBImpl implements BloquetoBB {
 
 	@Override
 	protected String getCodigoBarrasSemDigito() {
-
+		// junta as string para formar o codigo de barras sem o digíto
 		init();
 
 		StringBuilder buffer = new StringBuilder();
 		buffer.append(codigoBanco);
 		buffer.append(codigoMoeda);
-	    
-		//TODO: COMPLETAR
-		
-		
-		
+		buffer.append(fatorVencimento);
+		buffer.append(getValorFormatado());
+		buffer.append(numeroConvenioBanco);
+		buffer.append(complementoNumeroConvenioBancoSemDV);
+		buffer.append(numeroAgenciaRelacionamento);
+		buffer.append(contaCorrenteRelacionamentoSemDV);
+		buffer.append(tipoCarteira);
+
 		return buffer.toString();
 	}
 
@@ -115,10 +116,20 @@ public class BloquetoBBConvenio4 extends BloquetoBBImpl implements BloquetoBB {
 		init();
 
 		StringBuilder buffer = new StringBuilder();
-		
-		//TODO: COMPLETAR
-		
 
+		buffer.append(codigoBanco); // campo 01-03(03)
+		buffer.append(codigoMoeda); // campo 04-04 (01)
+		buffer.append(digitoVerificadorCodigoBarras(getCodigoBarrasSemDigito()));
+		
+		buffer.append(fatorVencimento);  //Campo 06-09(04)
+		buffer.append(getValorFormatado());  //Campo 10-19 (10)
+		buffer.append(numeroConvenioBanco);  //Ca,po 20-23 (04)
+		
+		buffer.append(complementoNumeroConvenioBancoSemDV);   //Campo 
+		buffer.append(numeroAgenciaRelacionamento);  //Campo 31-34()
+		buffer.append(contaCorrenteRelacionamentoSemDV);  //Campo 35-
+		buffer.append(tipoCarteira);  //Campo 43-44(02)
+		
 		return buffer.toString();
 	}
 
