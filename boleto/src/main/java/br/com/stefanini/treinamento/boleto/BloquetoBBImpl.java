@@ -31,7 +31,13 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 
 		long dias = diferencaEmDias(dataBase, dataVencimento);
 
-		// TODO: EXPLICAR O QUE ESTE M…TODO EST¡ FAZENDO
+		// TODO: EXPLICAR O QUE ESTE M–ôTODO EST–ë FAZENDO
+		/*
+		 * o m–πtodo seta a variavel fator fatorVencimento convertendo o valor da
+		 * variavel dias que esta em ms passados em um valor em n—ämero inteiro
+		 * de dias entre duas datas a variael dias recebedo do metodo
+		 * diferencaEmDias a diferen–∑a entre duas datas
+		 */
 
 		fatorVencimento = String.format("%04d", dias);
 
@@ -47,19 +53,20 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 	}
 
 	/**
-	 * Retorna o valor formatado do boleto banc·rio
+	 * Retorna o valor formatado do boleto banc–±rio
 	 * 
 	 * @return
 	 */
 	protected String getValorFormatado() {
 
-		// TODO: Explicar o que este mÈtodo est· fazendo
+		// TODO: Explicar o que este m–πtodo est–± fazendo
 		/*
-		 * O metÛdo transforma um valor em moeda, para um valor String. O valor do boleto È adicionado 
-		 * e atravÈs do metÛdo " valor.setScale(2, RoundingMode.HALF_UP)" ele È arrendondado e transformado em
-		 * um n˙meral de duas casas decimais depois da vÌgula. ApÛs isso o n˙mero È transformado em string e onde for ponto 
-		 * ele substitui por vazio concatenando o n˙mero
-		 * 
+		 * O met—Édo transforma de um valor em moeda, para um valor String. O
+		 * valor do boleto –π adicionado e atrav–πs do met—Édo
+		 * " valor.setScale(2, RoundingMode.HALF_UP)" ele –π arrendondado e
+		 * transformado em um n—ämeral de duas casas decimais depois da v–Ωgula.
+		 * Ap—És isso o n—ämero –π transformado em string e onde for ponto ele
+		 * substitui por vazio concatenando o n—ämero
 		 */
 		return String.format(
 				"%010d",
@@ -68,61 +75,70 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 	}
 
 	/**
-	 * Formata o n˙mero do convÍnio da Linha Digit·vel
+	 * Formata o n—ämero do conv–∫nio da Linha Digit–±vel
 	 * 
 	 * @return
 	 */
-	protected abstract String getLDNumeroConvenio();
+	protected abstract String getLDNumeroConvenio();// verificar a utilidade
+													// disto
 
 	/**
-	 * Retorna o cÛdigo de barras do Bloqueto
+	 * Retorna o c—Édigo de barras do Bloqueto
 	 * 
-	 * @return cÛdigo de barras
+	 * @return c—Édigo de barras
 	 */
 	protected abstract String getCodigoBarrasSemDigito();
 
 	public abstract String getCodigoBarras();
 
 	/**
-	 * Campo 5 da Linha Digit·vel
+	 * Campo 5 da Linha Digit–±vel
 	 * 
 	 * @return
 	 */
 	private String ldCampo5() {
-		// TODO: COMPLETAR
-		return "";
+
+		StringBuilder buffer = new StringBuilder();
+		buffer.append(fatorVencimento); // contendo fator venc, mais o valor
+		buffer.append(getValorFormatado());
+		return buffer.toString();
 	}
 
 	/**
-	 * Campo 4 da Linha Digit·vel
+	 * Campo 4 da Linha Digit–±vel
 	 * 
 	 * @return
 	 */
-	private String ldCampo4() {
-		// TODO: COMPLETAR
-		return "";
+	private String ldCampo4() {/*
+		StringBuilder buffer = new StringBuilder();		
+		//buffer.append(getDvCodigoBarras());// digito verificador do cod barras
+		buffer.append(digitoVerificadorCodigoBarras(getCodigoBarrasSemDigito()));
+		return buffer.toString();*/
+		
+		return String.valueOf(digitoVerificadorCodigoBarras(getCodigoBarrasSemDigito()));
+		
+		
 	}
 
 	/**
-	 * Campo 3 da Linha Digit·vel
+	 * Campo 3 da Linha Digit–±vel
 	 * 
 	 * @return
 	 */
 	private String ldCampo3() {
 
-		// TODO: COMPLETAR
-		return "";
+		return String.format("%s.%s", getCodigoBarras().substring(34, 39),
+				getCodigoBarras().substring(39, 44));
 	}
 
 	/**
-	 * Campo 2 da Linha Digit·vel
+	 * Campo 2 da Linha Digit–±vel
 	 * 
 	 * @return
 	 */
 	private String ldCampo2() {
-		// TODO: COMPLETAR
-
-		return "";
+		return String.format("%s.%s", getCodigoBarras().substring(24, 29),
+				getCodigoBarras().substring(29, 34));
 	}
 
 	/**
@@ -132,14 +148,17 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 	 * @return
 	 */
 	protected int digitoVerificadorPorCampo(String campo, boolean valor) {
-		// TODO: COMPLETAR
+	
+	
+
 
 		return 0;
 	}
 
 	/**
-	 * Calcula o digito verificado do cÛdigo de barras
-	 * @param string 
+	 * Calcula o digito verificado do c—Édigo de barras
+	 * 
+	 * @param string
 	 * 
 	 * @return
 	 */
@@ -149,15 +168,19 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 	}
 
 	/**
-	 * Campo 1 da Linha Digit·vel
+	 * Campo 1 da Linha Digit–±vel
 	 * 
-	 * - CÛdigo do Banco - CÛdigo da Moeda - N˙mero do convÍnio
+	 * - C—Édigo do Banco - C—Édigo da Moeda - N—ämero do conv–∫nio
 	 * 
 	 * @return
 	 */
 	private String ldCampo1() {
+
 		StringBuilder buffer = new StringBuilder();
-		// TODO: COMPLETAR
+		buffer.append(codigoBanco);
+		buffer.append(codigoMoeda);
+		buffer.append(getLDNumeroConvenio());// posi√ß√£o 20 24 do codigo de
+												// barras
 		return buffer.toString();
 
 	}
@@ -167,13 +190,26 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 		init();
 
 		StringBuilder buffer = new StringBuilder();
-		// TODO: COMPLETAR
+
+		buffer.append(ldCampo1());
+		buffer.append(digitoVerificadorPorCampo(ldCampo1(), true)); 
+		buffer.append(" "); 
+		buffer.append(ldCampo2()); 
+		buffer.append(digitoVerificadorPorCampo(ldCampo2(), false)); 
+		buffer.append(" "); 		
+		buffer.append(ldCampo3()); 
+		buffer.append(digitoVerificadorPorCampo(ldCampo3(), false)); 
+		
+		buffer.append(" "); 
+		buffer.append(ldCampo4()); 
+		buffer.append(" ");
+		buffer.append(ldCampo5()); 
 
 		return buffer.toString();
 	}
 
 	/**
-	 * Retorna a diferenÁa em dias de duas datas
+	 * Retorna a diferen–∑a em dias de duas datas
 	 * 
 	 * @param dataInicial
 	 *            Data inicial
@@ -183,17 +219,18 @@ public abstract class BloquetoBBImpl implements BloquetoBB {
 	 */
 	protected static long diferencaEmDias(Date dataInicial, Date dataFinal) {
 
-		// TODO: Estude a Math e escreva aqui o que este mÈtodo est· fazendo
+		// TODO: Estude a Math e escreva aqui o que este m–πtodo est–± fazendo
 		/*
-		 * Calcula a diferenÁa entre duas datas, obtendo um resultado em segundos
-		 * Fazendo a divis„o por ms obten-se um inteiro que atravÈs do Math.round
-		 * È arredondado para o n˙mero inteiro mais proximo 
+		 * Calcula a diferen–∑a entre duas datas, obtendo um resultado em
+		 * segundos Fazendo a divis–≥o por ms obten-se um inteiro que atrav–πs do
+		 * Math.round –π arredondado para o n—ämero inteiro mais proximo
 		 */
 
 		return Math
 				.round((dataFinal.getTime() - dataInicial.getTime()) / 86400000D);
 	}
 
+	// verificar a utilidade desta fun√ß√£o
 	public int getDvCodigoBarras() {
 
 		getCodigoBarras();
